@@ -50,11 +50,19 @@ const userSchema = new Schema<User>({
   }
 )
 
+// encrypt password
 userSchema.pre("save", function(next) {
     const user = this;
     user.password = encrypt(user.password);
     next()
 })
+
+// delete password before it retrieved in login process
+userSchema.methods.toJSON = function(){
+    const user = this.toObject();
+    delete user.password;
+    return user
+}
 
 const UserModel = mongoose.model("User", userSchema)
 
