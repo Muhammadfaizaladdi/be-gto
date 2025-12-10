@@ -28,6 +28,16 @@ const doc = {
             LoginRequest: {
                 identifier: "faizal@email.com",
                 password: "123"
+            },
+            RegisterRequest: {
+                fullname: "Maman",
+                username: "maman2025",
+                email: "maman2025@yopmail.com",
+                password: "123Hahaha",
+                confirmPassword: "123Hahaha"
+            },
+            ActivationRequest: {
+                code: "ABcdef"
             }
         }
     },
