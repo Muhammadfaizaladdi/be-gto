@@ -4,6 +4,7 @@ import UserModel from "../models/user.model";
 import { encrypt } from "../utils/encryption";
 import { generateToken } from "../utils/jwt";
 import { IReqUser } from "../utils/interface";
+import response from "../utils/response";
 
 
 type TRegister = {
@@ -74,17 +75,10 @@ export default{
             password
         })
 
-        res.status(200).json({
-            message: "Success Registration",
-            data: result
-        })
+        response.success(res, result, "success registration!")
 
     } catch (error) {
-        const err = error as unknown as Error
-        res.status(400).json({
-            message: err.message,
-            data: null
-        })
+        response.error(res, error, 'failed registration')
     }
     
 
@@ -120,20 +114,14 @@ export default{
 
             // if user data that is requested is not exist
             if (!userByIdentifier){
-                return res.status(403).json({
-                    message: "user not found",
-                    data: null
-                })
+                return response.unauthorized(res, "user not found")
             }
             
             // if exist then validate the password if it was the same as the saved one
             // if not matched return error 403
             const validatePassword: boolean = encrypt(password) === userByIdentifier.password;
             if (!validatePassword){
-                return res.status(403).json({
-                    message: "password not match",
-                    data: null
-                })  
+                return response.unauthorized(res, "user not found")
             }
 
             const token = generateToken({
@@ -143,16 +131,9 @@ export default{
             })
 
             // If pass the validation the return success
-            res.status(200).json({
-                message: "Login success",
-                data: token
-            })
+            response.success(res, token, "login success")
         } catch (error) {
-            const err = error as unknown as Error
-            res.status(400).json({
-                message: err.message,
-                data: null
-            })
+            response.error(res, error, "login failed")
         }
     },
 
@@ -167,16 +148,9 @@ export default{
             const user = req.user
             const result = await UserModel.findById(user?.id)
 
-            return res.status(200).json({
-                message: "Success get user profile",
-                data: result
-            })
+            response.success(res, result, "success get user profile")
         } catch (error) {
-            const err = error as unknown as Error;
-            res.status(400).json({
-                message: err.message,
-                data: null
-            })
+            response.error(res, error, 'failed get user profile')
         }
     },
     async activation(req: Request, res: Response){
@@ -200,16 +174,9 @@ export default{
                 new: true
             })
 
-            res.status(200).json({
-                message: "User successfully activated",
-                data: user
-            })
+            response.success(res, user, "user successfully activated")
         } catch (error) {
-            const err = error as unknown as Error;
-            res.status(400).json({
-                message: err.message,
-                data: null
-            })
+            response.error(res, error, "user is failed activated")
         }
     }
 }
