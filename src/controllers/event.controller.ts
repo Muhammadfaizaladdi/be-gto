@@ -52,7 +52,7 @@ export default {
     async findOne(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
-            const result = eventModel.findById(id)
+            const result = await eventModel.findById(id)
             response.success(res, result, "Success find one event")
         } catch (error) {
             response.error(res, error, "failed find one event")
@@ -61,25 +61,25 @@ export default {
     async update(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
-            const result = eventModel.findByIdAndUpdate(id, req.body, {new: true})
+            const result = await eventModel.findByIdAndUpdate(id, req.body, {new: true})
             response.success(res, result, "Success update an event")
         } catch (error) {
-            response.error(res, error, "failed update an event")
+            response.error(res, error, "failed to update an event")
         }
     },
     async remove(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
-            const result = eventModel.findByIdAndDelete(id, {new: true})
-            response.success(res, result, "Success find one event")
+            const result = await eventModel.findByIdAndDelete(id, {new: true})
+            response.success(res, result, "Success detele an event")
         } catch (error) {
-            response.error(res, error, "failed to create an event")
+            response.error(res, error, "failed to delete an event")
         }
     },
     async findOneBySlug(req: IReqUser, res: Response) {
         try {
             const { slug } = req.params
-            const result = eventModel.findOne({slug,})
+            const result = await eventModel.findOne({slug,})
             response.success(res, result, "Success find one by slug an event")
         } catch (error) {
             response.error(res, error, "failed find one an event by slug")

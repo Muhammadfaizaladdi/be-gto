@@ -25,10 +25,10 @@ router.delete('/category/:id', [authMiddleware, aclMiddleware([ROLES.ADMIN])],ca
 
 router.post('/events', [authMiddleware, aclMiddleware([ROLES.ADMIN])] ,eventController.create)
 router.get('/events', eventController.findAll)
-router.get('/events/:id', eventController.findOne)
+router.get('/event/:id', eventController.findOne)
 router.put('/events/:id', [authMiddleware, aclMiddleware([ROLES.ADMIN])] ,eventController.update)
 router.delete('/events/:id', [authMiddleware, aclMiddleware([ROLES.ADMIN])] ,eventController.remove)
-router.get('/events/:slug/slug', eventController.findOneBySlug)
+router.get('/events/slug/:slug', eventController.findOneBySlug)
 
 router.get('regions', regionController.getAllProvinces)
 router.get('regions/:id/province', regionController.getProvince)
