@@ -43,7 +43,7 @@ export default {
                 current: page,
                 total: count,
                 totalPages: Math.ceil(count/limit)
-                }, "success find all event")
+                }, "success find all events")
 
         } catch (error) {
             response.error(res, error, "failed find all events")
