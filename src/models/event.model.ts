@@ -18,12 +18,13 @@ export const eventDAO = Yup.object({
     createdBy: Yup.string().required(),
     createdAt: Yup.string(),
     updateAt: Yup.string(),
-    location: Yup.object({
+    location: Yup.object().shape({
   region: Yup.number().required(),
   coordinates: Yup.array()
     .of(Yup.number())
     .length(2)
-    .required()
+    .required(),
+  address: Yup.string()
 }).required(),
 
 })
@@ -94,6 +95,9 @@ const eventSchema = new Schema<Event>({
       type: [Number],
       required: true,
       default: [0, 0]
+    },
+    address : {
+        type: Schema.Types.String
     }
   },
   required: true

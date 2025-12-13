@@ -38,6 +38,31 @@ const doc = {
             },
             ActivationRequest: {
                 code: "ABcdef"
+            },
+            createEventRequest:{
+                    "name": "",
+                    "banner": "url banner",
+                    "category": "category objectId",
+                    "description": "",
+                    "startDate": "yyyy-mm-dd hh:mm:ss",
+                    "endDate": "yyyy-mm-dd hh:mm:ss",
+                    "location": {
+                        "region": "regtion objectId",
+                        "coordinates": [0, 0],
+                        "address" : "alamat"
+                    },
+                    "isOnline": false,
+                    "isFeatured": false,
+                    "isPublished" : false
+
+            },
+            createCategoryRequest:{
+                name : "",
+                description : "",
+                icon : ""
+            },
+            removeMediaRequest:{
+                fileUrl: ""
             }
         }
     },
