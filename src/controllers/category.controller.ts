@@ -3,6 +3,7 @@ import { Response } from "express"
 import { IReqUser, IPaginationQuery } from "../utils/interface"
 import CategoryModel, {categoryDAO} from "../models/category.model"
 import response from "../utils/response"
+import { isValidObjectId } from "mongoose"
 
 export default{
     async create(req: IReqUser, res: Response) {
@@ -55,8 +56,16 @@ export default{
     async findOne(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed find one a category")
+            }
+            
             const result = await CategoryModel.findById(id)
-
+            
+            if (!result){
+                return response.notfound(res, "failed find one a category")
+            }
+            
             response.success(res, result, "success find one category")
         } catch (error) {
             response.error(res, error, 'failed find one category')
@@ -65,10 +74,16 @@ export default{
     async update(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed update one a category")
+            }
             const result = await CategoryModel.findByIdAndUpdate(id, req.body, {
                 new: true
             })
-
+            
+            if (!result){
+                return response.notfound(res, "failed update one a category")
+            }
             response.success(res, result, "success update category")
         } catch (error) {
             response.error(res, error, 'failed update category')
@@ -77,8 +92,14 @@ export default{
     async remove(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed remove one a category")
+            }
             const result = await CategoryModel.findByIdAndDelete(id, {new: true})
             
+            if (!result){
+                return response.notfound(res, "failed remove one a category")
+            }
 
             response.success(res, result, "success remove category")
         } catch (error) {

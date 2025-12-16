@@ -3,7 +3,7 @@ import { Response } from "express";
 import { IPaginationQuery, IReqUser } from "../utils/interface";
 import response from "../utils/response";
 import bannerModel, { bannerDAO, TBanner } from "../models/banner.model";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, isValidObjectId } from "mongoose";
 
 
 export default{
@@ -51,7 +51,17 @@ export default{
     async findOne(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
+
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed find one a banner")
+            }
+            
             const result = await bannerModel.findById(id)
+            
+            if (!result){
+                return response.notfound(res, "failed find one a banner")
+            }
+            
             response.success(res, result, "Success to find a banner")
         } catch (error) {
             response.error(res, error, "failed to find a banner")
@@ -60,7 +70,14 @@ export default{
     async update(req: IReqUser, res: Response) {
         try {
             const {id} = req.params
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed update one a banner")
+            }
             const result = await bannerModel.findByIdAndUpdate(id, req.body, {new: true})
+            if (!result){
+                return response.notfound(res, "failed update one a banner")
+            }
+            
             response.success(res, result, "success to update a banner")
         } catch (error) {
             response.error(res, error, "failed to update a banner")
@@ -69,7 +86,13 @@ export default{
     async remove(req: IReqUser, res: Response) {
         try {
             const {id} = req.params
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed remove one a banner")
+            }
             const result =  await bannerModel.findByIdAndDelete(id, {new: true})
+            if (!result){
+                return response.notfound(res, "failed delete one a banner")
+            }
             response.success(res, result, "success to delete a banner")
         } catch (error) {
             response.error(res, error, "failed to remove a banner")

@@ -49,7 +49,17 @@ export default {
     async findOne(req: IReqUser, res:Response) {
         try {
             const { id } = req.params
+            
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed find one a ticket")
+            }
+            
             const result = await ticketModel.findById(id)
+            
+            if (!result){
+                return response.notfound(res, "failed find one a ticket")
+            }
+            
             response.success(res, result, "success find one ticket")
         } catch (error) {
             response.error(res, error, "failed to find a ticket")
@@ -58,7 +68,13 @@ export default {
     async update(req: IReqUser, res:Response) {
         try {
             const { id } = req.params
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed update one a ticket")
+            }
             const result = await ticketModel.findByIdAndUpdate(id, req.body, {new: true})
+            if (!result){
+                return response.notfound(res, "failed update one a ticket")
+            }
             response.success(res, result, "success update a ticket")
         } catch (error) {
             response.error(res, error, "failed to update a ticket")
@@ -67,7 +83,13 @@ export default {
     async remove(req: IReqUser, res:Response) {
         try {
             const { id } = req.params
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed remove one a ticket")
+            }
             const result = await ticketModel.findByIdAndDelete(id, {new: true})
+            if (!result){
+                return response.notfound(res, "failed remove one a ticket")
+            }
             response.success(res, result, "success remove a ticket")
         } catch (error) {
             response.error(res, error, "failed to remove a ticket")

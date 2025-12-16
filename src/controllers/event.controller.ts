@@ -3,7 +3,7 @@ import { Response } from "express"
 import { IPaginationQuery, IReqUser } from "../utils/interface"
 import response from "../utils/response"
 import eventModel, { eventDAO, TEvent } from "../models/event.model"
-import { FilterQuery } from "mongoose"
+import { FilterQuery, isValidObjectId } from "mongoose"
 
 export default {
     async create(req: IReqUser, res: Response) {
@@ -52,7 +52,17 @@ export default {
     async findOne(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
+            
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed find one an event")
+            }
+            
             const result = await eventModel.findById(id)
+            
+            if (!result){
+                return response.notfound(res, "failed find one an event")
+            }
+            
             response.success(res, result, "Success find one event")
         } catch (error) {
             response.error(res, error, "failed find one event")
@@ -61,7 +71,15 @@ export default {
     async update(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
+            
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed update one an event")
+            }
+            
             const result = await eventModel.findByIdAndUpdate(id, req.body, {new: true})
+            if (!result){
+                return response.notfound(res, "failed update one an event")
+            }
             response.success(res, result, "Success update an event")
         } catch (error) {
             response.error(res, error, "failed to update an event")
@@ -70,7 +88,15 @@ export default {
     async remove(req: IReqUser, res: Response) {
         try {
             const { id } = req.params
+            
+            if (!isValidObjectId(id)){
+                return response.notfound(res, "failed remove one an event")
+            }
+            
             const result = await eventModel.findByIdAndDelete(id, {new: true})
+            if (!result){
+                return response.notfound(res, "failed remove one an event")
+            }
             response.success(res, result, "Success detele an event")
         } catch (error) {
             response.error(res, error, "failed to delete an event")
