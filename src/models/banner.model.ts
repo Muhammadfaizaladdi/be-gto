@@ -30,7 +30,7 @@ const BannerSchema = new Schema<Banner>({
     },
 },{
     timestamps: true
-})
+}).index({title: "text"})
 
 const bannerModel = mongoose.model(BANNER_MODEL_NAME, BannerSchema)
 

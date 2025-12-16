@@ -26,7 +26,7 @@ const categorySchema = new Schema<Category>({
     },
 }, {
     timestamps: true,
-})
+}).index({name: "text"})
 
 const CategoryModel = mongoose.model("Category", categorySchema)
 

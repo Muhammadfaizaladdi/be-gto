@@ -108,7 +108,7 @@ const eventSchema = new Schema<Event>({
 
 },{
     timestamps: true
-})
+}).index({name: "text"})
 
 
 eventSchema.pre("save", function () {

@@ -40,20 +40,20 @@ const doc = {
                 code: "ABcdef"
             },
             createEventRequest:{
-                    "name": "",
-                    "banner": "url banner",
-                    "category": "category objectId",
-                    "description": "",
-                    "startDate": "yyyy-mm-dd hh:mm:ss",
-                    "endDate": "yyyy-mm-dd hh:mm:ss",
-                    "location": {
-                        "region": "regtion objectId",
-                        "coordinates": [0, 0],
-                        "address" : "alamat"
+                    name: "",
+                    banner: "url banner",
+                    category: "category objectId",
+                    description: "",
+                    startDate: "yyyy-mm-dd hh:mm:ss",
+                    endDate: "yyyy-mm-dd hh:mm:ss",
+                    location: {
+                        region: "regtion objectId",
+                        coordinates: [0, 0],
+                        address : "alamat"
                     },
-                    "isOnline": false,
-                    "isFeatured": false,
-                    "isPublished" : false
+                    isOnline: false,
+                    isFeatured: false,
+                    isPublished : false
 
             },
             createCategoryRequest:{
@@ -63,6 +63,18 @@ const doc = {
             },
             removeMediaRequest:{
                 fileUrl: ""
+            },
+            createBannerRequest: {
+                title: "banner title",
+                image: "link to image",
+                isShow: false
+            },
+            createTicketRequest: {
+                price: 3000,
+                name : "ticket name",
+                events: "693d40a36badb960b5c7a128",
+                description: "ticket description",
+                quantity: 100
             }
         }
     },
